@@ -11,30 +11,42 @@ def spline_velocidad(ts, vs):
         prom.append((ts[i]+ts[i+1])/2)
         prom.append(ts[i+1])
     
-    spline_cb = interp1d(ts, vs, kind='cubic')
+    spline_cb = interp1d(ts,vs, kind='cubic')
     interp = []
-    for j in range(len(prom)):
-        interp.append(spline_cb(prom[j]))
-
+    interp = spline_cb(prom)
     return prom, interp
 
-"""x = [0.0, 0.22, 0.85, 1.0, 1.5, 1.6, 1.99]
-y = [0.0, 0.1, -0.15, -0.03, 0.75, -0.3, 0.01]
-xgraph, ygraph = spline_velocidad(x, y)
-plt.plot(x, y, 'o', xgraph, ygraph, '-')
-plt.legend(['puntos', 'spline cubico'], loc='best')
-plt.show()"""
 
 def trapecio_adaptativo(x, y):
     n = len(x)
     a = x[0]
-    b = x[n]
-    #Si hay n puntos entonces hay n-1 subintervalos
-    h = b-a/(n-1)
+    b = x[n-1]
+    if (n == 1):
+        h = (b-a)
+    else: 
+        #Si hay n puntos entonces hay n-1 subintervalos
+        h = (b-a)/(n-1)
+
     y_left = y[:-1]
     y_right = y[1:]
-    suma = np.sum(y_right+y_left)
-    res = (h/2) * (y[0] + 2*suma + y[n])
+    res = (h/2) * np.sum(y_right+y_left)
+
     return res
 
+def posicion_particula(ts, vs):
+    ppos = []
+    for j in range(len(ts)):
+        ts_aux = ts[:j+1]
+        vs_aux = vs[:j+1]
+        ppos.append(trapecio_adaptativo(ts_aux, vs_aux))
+    return ppos
 
+
+x = [0.0, 0.22, 0.85, 1.0, 1.5, 1.6, 1.99]
+y = [0.0, 0.1, -0.15, -0.03, 0.75, -0.3, 0.01]
+xnew, ynew = spline_velocidad(x,y)
+res = posicion_particula(xnew, ynew)
+
+plt.plot(xnew,ynew, '-')
+plt.legend(['Posicion Particula'], loc='best')
+plt.show()
