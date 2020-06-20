@@ -1,4 +1,5 @@
 from scipy.interpolate import interp1d
+from scipy.interpolate import CubicSpline
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -15,15 +16,12 @@ def spline_velocidad(ts, vs):
         l_p.append((ts[j]+ts[j+1])/2)
         l_p.append(ts[j+1])
 
-    spline_c = interp1d(ts,vs, kind ='cubic')
+    spline_c = CubicSpline(ts,vs, extrapolate=True)
     i_p = []
-    for j in range(len(l_p)):
-        i_p.append(spline_c(l_p[j]))
+    i_p = spline_c(l_p)
 
     return l_p,i_p
 
-
-xgraph, ygraph = spline_velocidad(x, y)
 """
 plt.plot(x, y, 'o', xgraph, ygraph, '-')
 plt.legend(['puntos', 'spline cubico'], loc='best')
@@ -42,23 +40,18 @@ def trapecio_adaptativo(p, pv):
     pv_l = pv[:-1] # left endpoints
     return (h/2) * np.sum(pv_r + pv_l)
 
-"""
-xt, yt = spline_velocidad(x, y)
-T = trapecio_adaptativo(xt,yt)
-print(T) """
 
 #Ejercicio 1c
+xt, yt = spline_velocidad(x, y)
 
-def posicion_particula(xt,yt):
+def posicion_particula(xp,yp):
     pp = []
-    xp, yp = spline_velocidad(x, y)
     for i in range(len(xp)):
-        T = trapecio_adaptativo(xp[:i+1],yp[:i+1])
-        pp.append(T)
+        pp.append(trapecio_adaptativo(xp[:i+1],yp[:i+1]))
     return pp
 
-res = posicion_particula(x,y)
-print(res)
-plt.plot(x, y, 'o', xgraph, res, '-')
-plt.legend(['puntos', 'spline cubico'], loc='best')
+res = posicion_particula(xt,yt)
+
+plt.plot(xt, res, '-')
+plt.title('Posicion de la particula')
 plt.show()
