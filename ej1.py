@@ -22,8 +22,9 @@ def spline_velocidad(ts, vs):
 
     return l_p,i_p
 
-"""
+
 xgraph, ygraph = spline_velocidad(x, y)
+"""
 plt.plot(x, y, 'o', xgraph, ygraph, '-')
 plt.legend(['puntos', 'spline cubico'], loc='best')
 plt.show() """
@@ -34,7 +35,8 @@ def trapecio_adaptativo(p, pv):
     n = len(p)
     a = p[0]
     b = p[n-1]
-    h = (b-a)/(n-1)
+    if(n == 1): h = (b-a)
+    else: h = (b-a)/(n-1)
 
     pv_r = pv[1:] # right endpoints
     pv_l = pv[:-1] # left endpoints
@@ -47,13 +49,16 @@ print(T) """
 
 #Ejercicio 1c
 
-def posicion_particula(x,y):
+def posicion_particula(xt,yt):
     pp = []
     xp, yp = spline_velocidad(x, y)
-    for i in range(len(xp)-1):
-        T = trapecio_adaptativo(xp[0:i],yp[0:i])
+    for i in range(len(xp)):
+        T = trapecio_adaptativo(xp[:i+1],yp[:i+1])
         pp.append(T)
     return pp
 
 res = posicion_particula(x,y)
 print(res)
+plt.plot(x, y, 'o', xgraph, res, '-')
+plt.legend(['puntos', 'spline cubico'], loc='best')
+plt.show()
