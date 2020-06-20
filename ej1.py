@@ -48,10 +48,12 @@ def posicion_particula(xp,yp):
     pp = []
     for i in range(len(xp)):
         pp.append(trapecio_adaptativo(xp[:i+1],yp[:i+1]))
+    
     return pp
 
 res = posicion_particula(xt,yt)
 
 plt.plot(xt, res, '-')
+plt.color()
 plt.title('Posicion de la particula')
 plt.show()
