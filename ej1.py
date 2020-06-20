@@ -54,6 +54,5 @@ def posicion_particula(xp,yp):
 res = posicion_particula(xt,yt)
 
 plt.plot(xt, res, '-')
-plt.color()
 plt.title('Posicion de la particula')
 plt.show()
