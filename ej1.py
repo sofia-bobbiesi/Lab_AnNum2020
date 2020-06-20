@@ -1,4 +1,3 @@
-from scipy.interpolate import interp1d
 from scipy.interpolate import CubicSpline
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,11 +20,6 @@ def spline_velocidad(ts, vs):
     i_p = spline_c(l_p)
 
     return l_p,i_p
-
-"""
-plt.plot(x, y, 'o', xgraph, ygraph, '-')
-plt.legend(['puntos', 'spline cubico'], loc='best')
-plt.show() """
 
 #Ejercicio 1b
 
