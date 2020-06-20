@@ -55,5 +55,32 @@ print(gseidel(A1,b1,30,1e-5))
 
 #Ejercicio 2b
 
-def sor(A,b,omega,err,mit):
-    return None
+def SOR(A,b,omega,err,mit):
+
+#def SOR(A, b, x0, tol, max_iter, w): 
+    if (omega<=1 or omega>2): 
+        print('omega should be inside [1, 2)') 
+        step = -1
+        x = float('nan')
+        return 
+    n = b.shape 
+    x0 = np.zeros(n)
+    x = x0
+
+    for step in range (1, mit): 
+        for i in range(n[0]): 
+            new_values_sum = np.dot(A[i, :i], x[:i])
+            old_values_sum = np.dot(A[i, i+1 :], x0[ i+1: ]) 
+            x[i] = (b[i] - (old_values_sum + new_values_sum)) / A[i, i] 
+            x[i] = np.dot(x[i], omega) + np.dot(x0[i], (1 - omega))  
+
+        if (np.linalg.norm(np.dot(A, x)-b ) < err):
+            break 
+        x0 = x
+
+    #print("X = {}".format(x)) 
+    #print("The number of iterations is: {}".format(step))
+    return [x,step]
+x = SOR(A1, b1, 1.6, 1e-1, 30)
+print(x)
+#print(np.dot(A1, x))
