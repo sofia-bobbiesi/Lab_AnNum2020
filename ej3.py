@@ -13,7 +13,7 @@ import numpy as np
 #Ejercicio 3a
 
 def ex_3a():
-    print('Respuesta al ejercicio 3a: \n')
+    print('\33[1mRespuesta al ejercicio 3a: \33[0m \n')
     c = np.array([-500, -300])
     A_ub = np.array([
         [2, 1],
@@ -35,7 +35,7 @@ def ex_3a():
     print("Status: {}\n".format(res.status))
     #print(res.message + "\n")
     if res.success:
-        print("El cliente necesita fabricar al menos:\n")
+        print("El carpintero necesita fabricar al menos:\n")
         print("{} mesas\n".format(round(res.x[0])))
         print("{} sillas\n".format(round(res.x[1])))
         print("Ingreso neto maximizado con los recursos disponibles: {}\n".format(500 * round(res.x[0]) + 300 * round(res.x[1])))
@@ -43,7 +43,7 @@ def ex_3a():
 #Ejercicio 3b
 
 def ex_3b():
-    print('Respuesta al ejercicio 3b: (ver Figura 1) \n')
+    print('\33[1mRespuesta al ejercicio 3b: (ver Figura 1)\33[0m\n')
     m = np.linspace(0, 20, 100)
     s_1 = -2 * m + 40
     s_2 = (1/2) * (-m + 50)
@@ -53,8 +53,6 @@ def ex_3b():
 
     plt.title('Maximizar -500m - 300s')
     plt.legend(loc = "upper right")
-    plt.axhline(0, color = "black")
-    plt.axvline(0, color = "black")
     plt.ylim(0, 40)
     plt.xlim(0, 20)
     plt.ylabel("$s$")
@@ -66,9 +64,7 @@ def ex_3b():
 
 #Ejercicio 3c
 def ex_3c():
-    print('Respuesta al ejercicio 3c: \n')
-    def ej3_c():
-    """ Da la respuesta del ejercicio 3.c """
+    print('\33[1mRespuesta al ejercicio 3c:\33[0m \n')
     c = np.array([-500, -500, -300, -300])
     A_ub = np.array([
         [2, 2, 1, 1],
@@ -96,26 +92,17 @@ def ex_3c():
             sa: res.x[3]
         """
         horas_ayudante = 2 * round(res.x[1]) + round(res.x[3]) 
-        neto = 500 * round(res.x[0]) + 500 * round(res.x[1]) +\
-               300 * round(res.x[2]) + 300 * round(res.x[3])
+        neto = 500 * round(res.x[0]) + 500 * round(res.x[1]) + 300 * round(res.x[2]) + 300 * round(res.x[3])
         paga_ayudante = 200 * horas_ayudante
         porcentaje_ingreso = round(100 - 100 * (paga_ayudante / neto))
         print("Ingreso neto por el trabajo: {}\n".format(neto))
         print("Paga correspondiente al ayudante: {}\n".format(paga_ayudante))
-        print("Ingreso del cliente: {}\n".format(neto - paga_ayudante))
-        print("Porcentaje de ingreso del cliente ~ {} %\n".format(porcentaje_ingreso))
-        if 75 <= porcentaje_ingreso:
-            print("El ingreso del cliente es mayor o igual al 75%, y quizás da un buen margen para renovar el depósito.")
-            print("En este caso el ayudante trabajaría {} h más o menos.\n".format(horas_ayudante))
-        elif 60 <= porcentaje_ingreso < 75:
-            print("El ingreso del cliente es mayor o igual al 60% pero no supera el 75%, y quizás da un cierto margen para renovar el depósito.")
-            print("En este caso el ayudante trabajaría {} h más o menos.\n".format(horas_ayudante))
-        elif 50 <= porcentaje_ingreso < 60:
-            print("El ingreso del cliente es mayor o igual al 50% pero no supera el 60%, y quizás no da un buen margen para renovar el depósito.")
-            print("En este caso el ayudante trabajaría {} h más o menos.\n".format(horas_ayudante))
-        else:
-            print("El ingreso del cliente es menor al 50% y quizás haya que estudiar mejor la contratación.\n")
+        print("Ingreso del carpintero: {}\n".format(neto - paga_ayudante))
+        print("Porcentaje de ingreso del carpintero ≈ {} %\n".format(porcentaje_ingreso))
+        
+        print("Como el porcentaje es del ≈ {}, deja un pequeño margen para contratar al ayudante.".format(porcentaje_ingreso), "Luego, el ayudante trabajaría {} hs aproximadamente.\n".format(horas_ayudante))
 
 #Call the answers
 ex_3a()
 ex_3b()
+ex_3c()
