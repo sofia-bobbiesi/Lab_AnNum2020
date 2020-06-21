@@ -45,8 +45,8 @@ def posicion_particula(ts, vs):
 x = [0.0, 0.22, 0.85, 1.0, 1.5, 1.6, 1.99]
 y = [0.0, 0.1, -0.15, -0.03, 0.75, -0.3, 0.01]
 xnew, ynew = spline_velocidad(x,y)
-res = posicion_particula(xnew, ynew)
+pos = posicion_particula(xnew, ynew)
 
-plt.plot(xnew,ynew, '-')
-plt.legend(['Posicion Particula'], loc='best')
+plt.plot(xnew,pos,'-')
+plt.title("Posición de la partícula")
 plt.show()
