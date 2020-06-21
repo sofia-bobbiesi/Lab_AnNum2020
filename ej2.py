@@ -51,12 +51,12 @@ def SOR(A,b,omega,err,mit):
     A_D = np.diag(np.diag(A))
     A_U = np.triu(A, 1)
 
-    Left  = A_D + omega * A_L
-    Right = omega * A_U + (omega - 1) * A_D
+    left  = A_D + omega * A_L
+    right = omega * A_U + (omega - 1) * A_D
 
     while k < mit:
 
-        x_it = soltrinf(Left , omega * b - (Right @ x))
+        x_it = soltrinf(left , omega * b - (right @ x))
         #Check if it comes close to the result, otherwise, keep iterating
         norm = np.linalg.norm(x_it - x, np.inf)
         if norm <= err:
