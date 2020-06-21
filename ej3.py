@@ -99,8 +99,7 @@ def ex_3c():
         print("Paga correspondiente al ayudante: {}\n".format(paga_ayudante))
         print("Ingreso del carpintero: {}\n".format(neto - paga_ayudante))
         print("Porcentaje de ingreso del carpintero ≈ {} %\n".format(porcentaje_ingreso))
-        
-        print("Como el porcentaje es del ≈ {}, deja un pequeño margen para contratar al ayudante.".format(porcentaje_ingreso), "Luego, el ayudante trabajaría {} hs aproximadamente.\n".format(horas_ayudante))
+        print("Como el porcentaje es del ≈ {}, deja un pequeño margen para contratar al ayudante.".format(porcentaje_ingreso), "Luego, este trabajaría {} hs aproximadamente.\n".format(horas_ayudante))
 
 #Call the answers
 ex_3a()
