@@ -48,8 +48,8 @@ def ex_3b():
     s_1 = -2 * m + 40
     s_2 = (1/2) * (-m + 50)
     
-    plt.plot(m, s_1,   label = "$s = -2 m + 40$")
-    plt.plot(m, s_2,   label = "$s = (1/2) * (-m + 50)$")
+    plt.plot(m, s_1, label = "$s = -2 m + 40$")
+    plt.plot(m, s_2, label = "$s = (1/2) * (-m + 50)$")
 
     plt.title('Maximizar -500m - 300s')
     plt.legend(loc = "upper right")
@@ -64,10 +64,57 @@ def ex_3b():
     plt.grid()
     plt.show()
 
-
 #Ejercicio 3c
 def ex_3c():
     print('Respuesta al ejercicio 3c: \n')
+    def ej3_c():
+    """ Da la respuesta del ejercicio 3.c """
+    c = np.array([-500, -500, -300, -300])
+    A_ub = np.array([
+        [2, 2, 1, 1],
+        [1, 1, 2, 2]
+    ])
+    b_ub = np.array([40, 50])
+    bounds = [(0, None), (0, None), (0, None), (0, None)]
+    
+    res = linprog(
+        c = c,
+        A_ub = A_ub,
+        b_ub = b_ub,
+        bounds = bounds,
+        method = "interior-point"
+    )
+    
+    print("Éxito: {}\n".format(res.success))
+    print("Iteraciones: {}\n".format(res.nit))
+    print("Status: {}\n".format(res.status))
+    print(res.message + "\n")
+    if res.success:
+        """ mc: res.x[0]
+            ma: res.x[1]
+            sc: res.x[2]
+            sa: res.x[3]
+        """
+        horas_ayudante = 2 * round(res.x[1]) + round(res.x[3]) 
+        neto = 500 * round(res.x[0]) + 500 * round(res.x[1]) +\
+               300 * round(res.x[2]) + 300 * round(res.x[3])
+        paga_ayudante = 200 * horas_ayudante
+        porcentaje_ingreso = round(100 - 100 * (paga_ayudante / neto))
+        print("Ingreso neto por el trabajo: {}\n".format(neto))
+        print("Paga correspondiente al ayudante: {}\n".format(paga_ayudante))
+        print("Ingreso del cliente: {}\n".format(neto - paga_ayudante))
+        print("Porcentaje de ingreso del cliente ~ {} %\n".format(porcentaje_ingreso))
+        if 75 <= porcentaje_ingreso:
+            print("El ingreso del cliente es mayor o igual al 75%, y quizás da un buen margen para renovar el depósito.")
+            print("En este caso el ayudante trabajaría {} h más o menos.\n".format(horas_ayudante))
+        elif 60 <= porcentaje_ingreso < 75:
+            print("El ingreso del cliente es mayor o igual al 60% pero no supera el 75%, y quizás da un cierto margen para renovar el depósito.")
+            print("En este caso el ayudante trabajaría {} h más o menos.\n".format(horas_ayudante))
+        elif 50 <= porcentaje_ingreso < 60:
+            print("El ingreso del cliente es mayor o igual al 50% pero no supera el 60%, y quizás no da un buen margen para renovar el depósito.")
+            print("En este caso el ayudante trabajaría {} h más o menos.\n".format(horas_ayudante))
+        else:
+            print("El ingreso del cliente es menor al 50% y quizás haya que estudiar mejor la contratación.\n")
 
 #Call the answers
 ex_3a()
