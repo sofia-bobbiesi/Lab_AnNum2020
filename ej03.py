@@ -84,7 +84,7 @@ def ejc():
 
     print("Éxito: {}\n".format(res.success))
     print("Iteraciones: {}\n".format(res.nit))
-    print("Status: {}\n".format(res.status))
+    print("Estado: {}\n".format(res.status))
     print(res.message + "\n")
     if res.success:
         """ mc: res.x[0]

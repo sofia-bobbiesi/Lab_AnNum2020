@@ -34,7 +34,7 @@ def gseidel(A,b,err,mit):
 
 def sor(A, b, omega, err, mit): 
     if (omega<=1): 
-        print('omega must be greater than 1 \n') 
+        print('Omega debe ser mayor a 1 \n') 
         k = -1
         x = float('nan')
         return 
