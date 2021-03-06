@@ -1,12 +1,14 @@
 
 from inspect    import signature
 from matplotlib import pyplot
-from math       import tan, exp
-from numpy      import sign, linspace
-from sympy      import sympify, lambdify
+from math       import *
+from numpy      import *
+from sympy      import *
 from warnings   import catch_warnings
 
 import matplotlib.pyplot as plt
+
+x = Symbol('x')
 
 # Ejercicio 1
 def rbisec(fun, I, err, mit):
@@ -100,31 +102,33 @@ def ej2():
 
 # Ejercicio 3
 def  rnewton(fun, x0, err, mit):
-	f, df = fun(x0)
+    f = lambdify(x,fun)
+    df = lambdify(x,fun.diff(x))
+    
+    hx, hf = [x0], [f(x0)]
 
-	hx, hf = [x0], [f]
+    if df(x0) == 0:
+	    print(f'La derivada es nula en el punto {x0}')
+	    return hx, hf
 
-	if df == 0:
-		print('La derivada es nula en tal punto')
-		return hx, hf
-
-	k = 0
-	while (abs(f) >=err) and (k < mit):
+    k = 0
+    while (abs(f(x0)) >=err) and (k < mit):
 	
-		xn = x0 - f/df
+	    xn = x0 - f(x0)/df(x0)
 	
-		if abs( (xn - x0)/xn ) < err:
-			print('El paso es muy pequeño')
-			return hx, hf
+	    if abs((xn - x0)/xn) < err:
+		    print('El paso es muy pequeño/el procedimiento fue exitoso')
+		    return hx, hf
 
-		x0 = xn
-		f, df = fun(x0)
-		hx.append(x0)
-		hf.append(f)
+	    x0 = xn
+	    hx.append(x0)
+	    hf.append(f(x0))
 
-	k +=1
-	return hx, hf
- 
+    k +=1
+    return hx, hf
+
+# NO USAR NUNCA JAMÁS PI DE SYMPY. NUNCA!!! >:(
+
 # Ejercicio 4
 def ej4(a,x0,mit):
     if a > 0:
@@ -135,23 +139,21 @@ def ej4(a,x0,mit):
 
 # Ejercicio 5
 def ripf(fun, x0, err, mit):
-	f = fun(x0)
-	hx = [x0]
+    #g_p = lambdify(x,fun)
+    hx = [x0]
+    
+    k = 0
+    while k < mit:
+        p = fun(x0) #g_p(x0)
+        if abs(p-x0) < err:
+            print('El paso es pequeño/procedimiento fue exitoso')
+            return hx
 
-	k = 0
-	while k < mit:
-		xn = f
+        x0 = p 
+        hx.append(x0)
 
-		if abs(xn-x0) < err:
-			print('El paso es pequeño')
-			return hx
-
-		x0 = xn
-		f = fun(x0)
-		hx.append(x0)
-
-		k+=1
-	return hx
+        k+=1
+    return hx
 
 # Ejercicio 6
 def ej6():
