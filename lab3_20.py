@@ -67,17 +67,12 @@ def ej3():
     fun = lambda x: 1/x
     zj = lambda x: 24/25 + x/25
 
-    xi = [1,2,3,4,5]
-    yi = [fun(1),fun(2),fun(3),fun(4),fun(5)]
-    zi = []
-    l_fun = []
-
-    for i in range(1,102):
-        zi.append(zj(i))
+    xi = list(range(1,6))
+    yi = [fun(i) for i in range(1,6)]
     
-    for i in zi:
-        l_fun.append(fun(i))
-
+    zi = [zj(i) for i in range(1,102)]
+    l_fun = [fun(i) for i in zi]
+    
     plt.plot(zi,inewton(xi,yi,zi),label = 'p: polinomio interpolante',color='pink')
     plt.plot(zi,l_fun,label = 'f: 1/x',color='purple')
     plt.grid()
@@ -88,32 +83,24 @@ def ej3():
 
 def ej4(n=int):
     fun = lambda x: 1/(1+25*x**2)
-    zi = [-1]
-    xi = []
-    f_xi = []
-    f_fun = [fun(-1)]
-    p = -1.
-    #200 puntos equisespaciados
-    for i in range(199):
-        p += 2/200
-        f_fun.append(fun(p))
-        zi.append(p)
-    
-    #Lista (xi,f(xi))
-    for i in range(1,n+1):
-        xi.append((2*(i-1))/(n-1))
-        f_xi.append(fun(i))
 
+    xi = [((2*(i-1))/(n-1)) for i in range(1,n+1)]
+    f_xi = [fun(i) for i in xi]
+
+    zi = np.linspace(-1, 1, 200) #crea puntos espaciados equisespaciados
+    f_fun = [fun(i) for i in zi]
+    
     plt.plot(zi,inewton(xi,f_xi,zi),label='Polinomio Interpolante de Newton')
     plt.plot(zi,f_fun,label='Función original')
     plt.grid()
     plt.legend()
     plt.show()
 
+ej4(3)
 def ej5():
     # Primero, debemos leer el archivo con los datos, generando una matriz.
     # La primer columna son los años, la segunda son las temperaturas que usaremos.
-    datos = np.loadtxt("datos_aeroCBA.dat")
+    datos = np.loadtxt("datos/datos_aeroCBA.dat")
 
     # El atributo "shape" de la matriz "datos" nos dice la forma de la matriz (una tupla).
     # La cantidad de filas de la matriz está en el primer elemento de shape.
