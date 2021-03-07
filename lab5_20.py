@@ -1,6 +1,6 @@
 import numpy as np
 import scipy.integrate as integrate
-from math import ceil, cos, sin, e, pi, sqrt, inf
+from math import ceil, cos, sin, tan, e, pi, sqrt, inf,log
 from matplotlib import pyplot
 
 def intenumcomp(fun,a,b,N,regla=str):
@@ -147,3 +147,41 @@ def ej4():
         error = abs(d_aprox - intenumcomp(d,0,pi/2,n,'simpson'))
         n +=1
     print(f"La función 1/sqrt((1-sin(x)**2)/2) tiene un error < 10e-5 para n = {n} con la regla de simpson\n")
+
+def ej5a():
+    """
+    f(x) = exp(-x**2) , f(-x) = exp(-(-x)**2) = f(x) => exp es par
+    Una forma de integrar sería:
+    integral(-inf,+inf) f(x)dx = 2 * integral(0,+inf) f(x)dx
+    También tenemos que 
+    u ->  pi/2 <=> tan(u) -> +inf
+    u -> -pi/2 <=> tan(u) -> -inf
+    Si x = tan(u), u -> +pi/2, x -> +inf
+                   u -> -pi/2, x -> -inf
+    -x**2 = -tan(u)**2
+    dx = sec(u)**2 * du = cos(u)**(-2) du
+    """
+    fun = np.vectorize(lambda u: np.exp(-tan(u)**2) * cos(u)**(-2))
+    u = np.linspace(-pi/2, pi/2, 100)
+    trapecio = integrate.trapz(fun(u), u)
+    simpson  = integrate.simps(fun(u), u, even="avg")
+    print("Integral por regla del Trapecio (integrate.trapz): %s\n"%trapecio)
+    print("Integral por regla de Simpson (integrate.simps): %s\n"%simpson)
+    return trapecio, simpson
+
+def ej5b():
+    fun = np.vectorize(lambda x : (x**2) * log(x + (x**2 + 1)**(1/2)))
+    x = np.linspace(0, 2, 100)
+    trapecio = integrate.trapz(fun(x), x)
+    simpson  = integrate.simps(fun(x), x, even="avg")
+    print("Integral por regla del Trapecio (integrate.trapz): %s\n"%trapecio)
+    print("Integral por regla de Simpson (integrate.simps): %s\n"%simpson)
+    return trapecio, simpson
+
+def pendulo(l=int,alfa=int,N=int,regla=str):
+    #alfa entre [0,90] en grados
+    g = 9.8
+    r_alfa = np.deg2rad(alfa)
+    fun = lambda x : 1/sqrt(((1-sin(r_alfa/2)**2)*sin(x)**2))
+    T = 4*(sqrt(l)/g) * intenumcomp(fun,0,pi/2,N,regla)
+    return T
