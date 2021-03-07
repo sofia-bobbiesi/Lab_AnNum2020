@@ -84,7 +84,8 @@ def ej3a():
     A = p[0]
     c_hat = p[1]
     C = np.exp(c_hat)
-    print(A," ",C)
+    
+    return A,C
 
 
 def ej3b():
@@ -101,7 +102,8 @@ def ej3b():
     A = p[0]
     c_hat = p[1]
     C = np.exp(c_hat)
-    print(A," ",C)
+    
+    return A,C
 
 def ej4():
     datos = np.genfromtxt('datos/covid_italia.csv', delimiter=',')
@@ -119,7 +121,10 @@ def ej4():
 
     modelo = lambda x: a*np.exp(b*x)
 
-    plt.plot(x,modelo(x),label='ajuste')
-    plt.plot(x,y,label="Original")
+    plt.plot(x,modelo(x),label='Función aproximada')
+    plt.plot(x,y_hat,label='Datos de ajuste')
+    plt.plot(x,y,label="Datos")
     plt.legend()
     plt.show()
+
+ej4()
