@@ -42,6 +42,7 @@ def inewton(xi=list, yi=list, zi=list):
     w = []
     pk = 0
 
+    #Calculo el polinomio de la forma a0 + a1(x-x0)...
     for i in range(0,n):
         p_pol = 1
         for j in range(0,i):
@@ -72,15 +73,13 @@ def ej3():
     plt.legend()
     plt.show()
 
-"""  Considerar la funci ́onftal quef(x) = 1/(1 + 25x2).  Graficarfypnen una misma figurausando 200 puntos igualmente espaciados en el intervalo [−1,1], dondepnes el polinomioque interpola los pares{(xi, f(xi))}n+1i=1conxi= 2(i−1)/n−1,i= 1, . . . , n+ 1.  Var ́ıenentre 1 y 15.Implementar  la  resoluci ́on  de  este  ejercicio  en  elscript“lab3ej4”.   Al  ejecutarlo  debeabrir 15 ventanas con el respectivo gr ́afico """
-
 def ej4(n=int):
     fun = lambda x: 1/(1+25*x**2)
 
     xi = [((2*(i-1))/(n-1)) for i in range(1,n+1)]
     f_xi = [fun(i) for i in xi]
 
-    zi = np.linspace(-1, 1, 200) #crea puntos espaciados equisespaciados
+    zi = np.linspace(-1, 1, 200) #crea puntos equisespaciados
     f_fun = [fun(i) for i in zi]
     
     plt.plot(zi,inewton(xi,f_xi,zi),label='Polinomio Interpolante de Newton')
