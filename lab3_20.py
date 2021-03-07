@@ -6,9 +6,7 @@ from sympy      import *
 from warnings   import catch_warnings
 from scipy.interpolate import CubicSpline
 
-
-x = Symbol('x')
-# .  Programar una funcion en pytho que evalue el polinomio interpolante p usando la formade Lagrange.  La funcion debe llamarse “ilagrange” y tener como entrada (x, y, z) donde x, y ∈Rn son las coordenadas de los pares a interpolar (o seap(xi) =yi,i= 1, . . . , n)yz∈Rm son  valores  para  evaluar p.   La  salida debe  ser w ∈Rm tal  que wj=p(zj),j= 1, . . . , m.  La sintaxis a utilizar debe ser:python> w = ilagrange(x, y, z)
+x = Symbol('x') # Para poder interpretar funciones
 
 def ilagrange(xi=list, yi=list, zi=list):
     n = len(xi)
@@ -28,8 +26,6 @@ def ilagrange(xi=list, yi=list, zi=list):
     for i in zi:
         w.append(pn(i))
     return w
-
-# Realizar una funcion en python an ́aloga a la del ejercicio 1 pero utilizando la forma de New-ton del polinomio interpolante, calculando los coeficientes mediantediferencias divididas.La funci ́on debe llamarse “inewton”.
 
 def inewton(xi=list, yi=list, zi=list):
     #n filas, 2n-1 columnas
@@ -60,9 +56,6 @@ def inewton(xi=list, yi=list, zi=list):
 
     return w
 
-
-#  Considerar  la  funci ́onftal  quef(x)  =  1/x.   Utilizando  el  ejercicio  anterior,  graficaren  una  misma  figurafypque  interpole{(i, f(i))}5i=1,  usando  para  ambas  los  puntosequiespaciadoszj= 24/25 +j/25,j= 1, . . . ,101
-
 def ej3():
     fun = lambda x: 1/x
     zj = lambda x: 24/25 + x/25
@@ -92,11 +85,11 @@ def ej4(n=int):
     
     plt.plot(zi,inewton(xi,f_xi,zi),label='Polinomio Interpolante de Newton')
     plt.plot(zi,f_fun,label='Función original')
+    plt.title(f"n = {n}")
     plt.grid()
     plt.legend()
     plt.show()
 
-ej4(3)
 def ej5():
     # Primero, debemos leer el archivo con los datos, generando una matriz.
     # La primer columna son los años, la segunda son las temperaturas que usaremos.
@@ -137,4 +130,3 @@ def ej5():
     plt.ylabel("Temperaturas [°C]")
     plt.grid()
     plt.show()
-
