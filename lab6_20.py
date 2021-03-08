@@ -184,6 +184,3 @@ def ej6():
     _, g = gseidel(A2,b2,10e-4,1000)
     print(f"Para el 2) se necesitan {j} con el método de Jacobi") #500
     print(f"Para el 2) se necesitan {g} con el método de Gauss-Seidel") #474
-
-
-    
