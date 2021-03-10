@@ -193,7 +193,7 @@ def ej5b():
     A_ub = np.vstack([A1,A2])
     b_ub = np.hstack([b1,b2])
 
-    res = linprog(c,A_ub=A_ub,b_ub=b_ub)
+    res = linprog(c,A_ub=A_ub,b_ub=b_ub) #Si no se incluyen los bounds, se asumen <=0
 
     # M_1 M_2 M_3 M_4 N_1 N_2 N_3 N_4 ... Q_4
 
