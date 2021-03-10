@@ -211,7 +211,7 @@ def ej6():
         # Dimensión (10000,)
     c = costos.flatten()
     # Dimensión (200,)
-    b_ub = np.hstack((stock, -demanda))
+    b_ub = np.hstack((stock, (-1)*demanda))
     # Dimensión (200, 10000)
     A_ub = np.vstack(
         ( np.kron(np.eye(100), np.ones(100)), np.kron(np.ones(100), -np.eye(100)) )
@@ -226,9 +226,11 @@ def ej6():
         bounds = bounds,
     )
 
+
     print(f"Éxito: {res.success}\n")
     print(f"Iteraciones: {res.nit}\n")
     print(res.message + "\n")
+    #Quizás hubiera sido más sano hacer un reshape de res.x y printear como matriz
     if res.success:
         print("Solución:\n")
         for i in range(100):
